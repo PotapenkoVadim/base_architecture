@@ -24,14 +24,12 @@ public class SceneLoaderView: MonoBehaviour
 
   private void OnLoadStarted(SceneLoadStartedEvent e)
   {
-    Debug.Log("ON LOAD STARTED");
     _loadingText.text = $"Loading {e.SceneName} scene...";
     _loadingOverlay.SetActive(true);
   }
 
   private void OnLoadComleted(SceneLoadCompletedEvent e)
   {
-    Debug.Log("ON LOAD COMPLETED");
     _loadingOverlay.SetActive(false);
   }
 }

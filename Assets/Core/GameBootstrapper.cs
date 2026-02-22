@@ -21,9 +21,6 @@ public class GameBootstrapper
     Services.Register(sceneService);
 
     InitializeInfrastructure(config);
-    // sceneService.LoadScene(config.StartupScene);
-
-    Debug.Log("APP WAS INITIALIZE SUCCESSFULLY");
   }
 
   private static void InitializeInfrastructure(GlobalConfig config)
