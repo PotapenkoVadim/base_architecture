@@ -1,0 +1,1 @@
+public struct SceneLoadStartedEvent { public string SceneName; }
