@@ -14,7 +14,6 @@ public class GameBootstrapper
     Services.Register(eventBus);
 
     var input = new InputProvider(eventBus);
-    input.Initilize();
     Services.Register(input);
 
     var sceneService = new SceneService(eventBus);
@@ -34,7 +33,7 @@ public class GameBootstrapper
     if (config.sceneLoaderPrefab != null)
     {
       var overlay = Object.Instantiate(config.sceneLoaderPrefab);
-      Object.DontDestroyOnLoad(overlay.gameObject);
+      Object.DontDestroyOnLoad(overlay);
     }
   }
 }

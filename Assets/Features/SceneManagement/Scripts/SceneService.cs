@@ -2,7 +2,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class SceneService
+public class SceneService: IGameModule
 {
   private const float MAX_DELAY = 2.0f;
   private const float AWAITED_PROGRESS = 0.9f;

@@ -1,11 +1,12 @@
-public class EconomyController
+public class EconomyController: IGameModule
 {
   private int _amount = 0;
   private readonly EventBus _bus;
 
-  public EconomyController(EventBus bus)
+  public EconomyController(EventBus bus) =>_bus = bus;
+
+  public void Initilize()
   {
-    _bus = bus;
     _bus.SubScribe<AddGoldPointEvent>(HandleAddGold);
     _bus.SubScribe<SubtractGoldPointEvent>(HandleSubtractGold);
   }

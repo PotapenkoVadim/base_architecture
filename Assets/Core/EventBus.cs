@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-public class EventBus
+public class EventBus: IGameModule
 {
   private readonly Dictionary<Type, object> _subscribers = new();
 

@@ -1,11 +1,12 @@
-public class HealthController
+public class HealthController: IGameModule
 {
   private int _hp = 100;
   private readonly EventBus _bus;
 
-  public HealthController(EventBus bus)
+  public HealthController(EventBus bus) =>_bus = bus;
+
+  public void Initilize()
   {
-    _bus = bus;
     _bus.SubScribe<AddHealthPointEvent>(HandleAddHealth);
     _bus.SubScribe<SubtractHealthPointEvent>(HandleSubstractHealth);
   }
