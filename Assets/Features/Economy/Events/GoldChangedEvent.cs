@@ -1,0 +1,1 @@
+public struct GoldChangedEvent { public int NewValue; public int ChangedValue; }

@@ -20,6 +20,12 @@ public class GameBootstrapper
     var sceneService = new SceneService(eventBus);
     Services.Register(sceneService);
 
+    var healthService = new HealthController(eventBus);
+    Services.Register(healthService);
+
+    var economyService = new EconomyController(eventBus);
+    Services.Register(economyService);
+
     InitializeInfrastructure(config);
   }
 
