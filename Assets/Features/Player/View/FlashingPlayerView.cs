@@ -39,7 +39,7 @@ public class FlashingPlayerView : MonoBehaviour
 
   private void HandleHealthChanged(HealthChangedEvent e)
   {
-    Color targetColor = e.DamageValue > 0 ? _healColor : _damageColor;
+    Color targetColor = e.Type == HealthChangeType.Heal ? _healColor : _damageColor;
     StartFlash(targetColor);
   }
 

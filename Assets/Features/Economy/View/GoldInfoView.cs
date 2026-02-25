@@ -17,7 +17,7 @@ public class GoldInfoView: MonoBehaviour
 
   private void Awake()
   {
-    var initialGold = Services.Get<EconomyController>().GetAmount();
+    var initialGold = Services.Get<EconomyModel>().Amount;
     _text.text = START_TEXT + initialGold;
 
     _originalColor = _background.color;
@@ -37,7 +37,7 @@ public class GoldInfoView: MonoBehaviour
     _cts?.Cancel();
     _cts = new CancellationTokenSource();
 
-    _text.text = START_TEXT + e.NewValue;
+    _text.text = START_TEXT + Services.Get<EconomyModel>().Amount;
 
     FlashBackgroundAsync(_cts.Token);
   }

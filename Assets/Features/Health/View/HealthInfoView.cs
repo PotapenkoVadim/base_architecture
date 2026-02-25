@@ -18,7 +18,7 @@ public class HealthInfoView: MonoBehaviour
 
   private void Awake()
   {
-    var initialHP = Services.Get<HealthController>().GetValue();
+    var initialHP = Services.Get<HealthModel>().CurrentHealht;
     _text.text = START_TEXT + initialHP;
 
     _originalColor = _background.color;
@@ -35,12 +35,12 @@ public class HealthInfoView: MonoBehaviour
 
   private void UpdateUI(HealthChangedEvent e)
   {
-    Color targetColor = e.DamageValue > 0 ? _healColor : _damageColor;
+    Color targetColor = e.Type == HealthChangeType.Heal ? _healColor : _damageColor;
 
     _cts?.Cancel();
     _cts = new CancellationTokenSource();
 
-    _text.text = START_TEXT + e.NewValue;
+    _text.text = START_TEXT + Services.Get<HealthModel>().CurrentHealht;
 
     FlashBackgroundAsync(targetColor, _cts.Token);
   }

@@ -1,9 +1,12 @@
 public class EconomyController: IGameModule
 {
-  private int _amount = 0;
+  private readonly EconomyModel _model;
   private readonly EventBus _bus;
 
-  public EconomyController(EventBus bus) =>_bus = bus;
+  public EconomyController(EventBus bus, EconomyModel model) {
+    _bus = bus;
+    _model = model;
+  }
 
   public void Initilize()
   {
@@ -13,21 +16,19 @@ public class EconomyController: IGameModule
 
   private void HandleAddGold(AddGoldPointEvent e)
   {
-    if (_amount < 999)
+    if (_model.IsLessThanMax())
     {
-      _amount += 1;
-      _bus.Raise(new GoldChangedEvent() {ChangedValue = 1, NewValue = _amount});
+      _model.Amount += 1;
+      _bus.Raise(new GoldChangedEvent() {Type = GoldChangedType.Profit});
     }
   }
 
   private void HandleSubtractGold(SubtractGoldPointEvent e)
   {
-    if (_amount > 0)
+    if (_model.IsMoreThanMin())
     {
-      _amount -= 1;
-      _bus.Raise(new GoldChangedEvent() {ChangedValue = 1, NewValue = _amount});
+      _model.Amount -= 1;
+      _bus.Raise(new GoldChangedEvent() {Type = GoldChangedType.Loss});
     }
   }
-
-  public int GetAmount() => _amount;
 }

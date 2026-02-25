@@ -1,9 +1,12 @@
 public class HealthController: IGameModule
 {
-  private int _hp = 100;
+  private readonly HealthModel _model;
   private readonly EventBus _bus;
 
-  public HealthController(EventBus bus) =>_bus = bus;
+  public HealthController(EventBus bus, HealthModel model) {
+    _bus = bus;
+    _model = model;
+  }
 
   public void Initilize()
   {
@@ -13,19 +16,17 @@ public class HealthController: IGameModule
 
   private void HandleAddHealth(AddHealthPointEvent e)
   {
-    if (_hp < 100) {
-      _hp += 1;
-      _bus.Raise(new HealthChangedEvent { NewValue = _hp, DamageValue = 1 });
+    if (_model.IsLessThanMax()) {
+      _model.CurrentHealht += 1;
+      _bus.Raise(new HealthChangedEvent { Type = HealthChangeType.Heal });
     }
   }
 
   private void HandleSubstractHealth(SubtractHealthPointEvent e)
   {
-    if (_hp > 0) {
-      _hp -= 1;
-      _bus.Raise(new HealthChangedEvent { NewValue = _hp, DamageValue = -1 });
+    if (_model.IsMoreThanMin()) {
+      _model.CurrentHealht -= 1;
+      _bus.Raise(new HealthChangedEvent { Type = HealthChangeType.Damage });
     }
   }
-
-  public int GetValue() => _hp;
 }

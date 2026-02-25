@@ -1,1 +1,1 @@
-public struct GoldChangedEvent { public int NewValue; public int ChangedValue; }
+public struct GoldChangedEvent { public GoldChangedType Type; }

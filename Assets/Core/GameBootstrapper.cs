@@ -1,29 +1,31 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class GameBootstrapper
 {
   private const string GLOBAL_CONFIG = "GlobalConfig";
 
+  private static readonly List<object> _activeSystems = new();
+
+
   [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
   public static void Execute()
   {
     var config = Resources.Load<GlobalConfig>(GLOBAL_CONFIG);
-    Debug.Log(config);
+    var eventBus = Register(new EventBus());
+    Register(new InputProvider(eventBus));
+    Register(new SceneService(eventBus));
 
-    var eventBus = new EventBus();
-    Services.Register(eventBus);
+    var healthModel = Register(new HealthModel());
+    var economyModel = Register(new EconomyModel());
 
-    var input = new InputProvider(eventBus);
-    Services.Register(input);
+    Register(new HealthController(eventBus, healthModel));
+    Register(new EconomyController(eventBus, economyModel));
 
-    var sceneService = new SceneService(eventBus);
-    Services.Register(sceneService);
-
-    var healthService = new HealthController(eventBus);
-    Services.Register(healthService);
-
-    var economyService = new EconomyController(eventBus);
-    Services.Register(economyService);
+    foreach (var system in _activeSystems)
+    {
+      if (system is IGameModule gameModule) gameModule.Initilize();
+    }
 
     InitializeInfrastructure(config);
   }
@@ -35,5 +37,13 @@ public class GameBootstrapper
       var overlay = Object.Instantiate(config.sceneLoaderPrefab);
       Object.DontDestroyOnLoad(overlay);
     }
+  }
+
+  private static T Register<T>(T system) where T:IGameModule
+  {
+    _activeSystems.Add(system);
+    Services.Register(system);
+
+    return system;
   }
 }

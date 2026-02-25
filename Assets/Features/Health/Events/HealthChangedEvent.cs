@@ -1,1 +1,1 @@
-public struct HealthChangedEvent { public int NewValue; public int DamageValue; }
+public struct HealthChangedEvent { public HealthChangeType Type; }
