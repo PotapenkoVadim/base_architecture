@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GlobalConfig
   sceneLoaderPrefab: {fileID: 8049494258904515209, guid: 43f3ca896cddf2dd4a21fa0aa1cce576, type: 3}
   StartupScene: {fileID: 11400000, guid: 4b04b2f8aee8a6c22b4a2da65d0e0cd2, type: 2}
+  audioConfig: {fileID: 11400000, guid: 8619e40b8e2224085a0d74c29a49e830, type: 2}

@@ -16,17 +16,17 @@ public class GameBootstrapper
     Register(new InputProvider(eventBus));
     Register(new SceneService(eventBus));
 
+    var audioConfig = config.audioConfig; 
+    var audioSource = CreateGlobalAudioSource();
+    Register(new SoundService(eventBus, audioConfig, audioSource));
+
     var healthModel = Register(new HealthModel());
     var economyModel = Register(new EconomyModel());
 
     Register(new HealthController(eventBus, healthModel));
     Register(new EconomyController(eventBus, economyModel));
 
-    foreach (var system in _activeSystems)
-    {
-      if (system is IGameModule gameModule) gameModule.Initilize();
-    }
-
+    InitializeServices();
     InitializeInfrastructure(config);
   }
 
@@ -39,11 +39,28 @@ public class GameBootstrapper
     }
   }
 
+  private static void InitializeServices()
+  {
+    foreach (var system in _activeSystems)
+    {
+      if (system is IGameModule gameModule)
+        gameModule.Initilize();
+    }
+  }
+
   private static T Register<T>(T system) where T:IGameModule
   {
     _activeSystems.Add(system);
     Services.Register(system);
 
     return system;
+  }
+
+  private static AudioSource CreateGlobalAudioSource()
+  {
+    var gameObject = new GameObject("GlobalAudioSource");
+    Object.DontDestroyOnLoad(gameObject);
+
+    return gameObject.AddComponent<AudioSource>();
   }
 }
