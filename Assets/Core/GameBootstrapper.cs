@@ -16,12 +16,21 @@ public class GameBootstrapper
     Register(new InputProvider(eventBus));
     Register(new SceneService(eventBus));
 
+    #if UNITY_WEBGL
+      var saveService = new PlayerPrefsSaveService();
+    #else
+      var saveService = new JsonSaveService();
+    #endif
+    Register(saveService);
+
     var audioConfig = config.audioConfig; 
     var audioSource = CreateGlobalAudioSource();
     Register(new SoundService(eventBus, audioConfig, audioSource));
 
     var healthModel = Register(new HealthModel());
     var economyModel = Register(new EconomyModel());
+
+    Register(new PersistenceManager(saveService, economyModel, healthModel));
 
     Register(new HealthController(eventBus, healthModel));
     Register(new EconomyController(eventBus, economyModel));

@@ -26,9 +26,7 @@ public class SoundService: IGameModule
   private void OnGoldChangedEvent(GoldChangedEvent e)
   {
     if (_config.goldClink != null)
-    {
       _audioSource.PlayOneShot(_config.goldClink);
-    }
   }
 
   private void OnHealthChangedEvent(HealthChangedEvent e)
