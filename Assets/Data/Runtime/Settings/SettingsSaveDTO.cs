@@ -1,0 +1,1 @@
+public class SettingsSaveDTO { public float MasterVolume; }

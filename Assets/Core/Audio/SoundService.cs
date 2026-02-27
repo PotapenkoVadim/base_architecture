@@ -37,4 +37,9 @@ public class SoundService: IGameModule
     else if (e.Type == HealthChangeType.Damage && _config?.playerDamage != null)
       _audioSource.PlayOneShot(_config.playerDamage);
   }
+
+  public void SetVolume(float volume)
+  {
+    _audioSource.volume = Mathf.Clamp01(volume);
+  }
 }

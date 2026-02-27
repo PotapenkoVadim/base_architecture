@@ -29,11 +29,13 @@ public class GameBootstrapper
 
     var healthModel = Register(new HealthModel());
     var economyModel = Register(new EconomyModel());
+    var settingsModel = Register(new SettingsModel());
 
-    Register(new PersistenceManager(saveService, economyModel, healthModel));
+    Register(new PersistenceManager(saveService, economyModel, healthModel, settingsModel));
 
     Register(new HealthController(eventBus, healthModel));
     Register(new EconomyController(eventBus, economyModel));
+    Register(new SettingsController(eventBus, settingsModel));
 
     InitializeServices();
     InitializeInfrastructure(config);

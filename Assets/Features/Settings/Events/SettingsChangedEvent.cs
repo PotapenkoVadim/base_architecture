@@ -1,0 +1,1 @@
+public struct SettingChangedEvent { public float NewVolume; }

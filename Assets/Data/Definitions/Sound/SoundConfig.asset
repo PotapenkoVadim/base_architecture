@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f9fed0ee729b9a15a1f3ff59f5c81b3, type: 3}
   m_Name: SoundConfig
   m_EditorClassIdentifier: Assembly-CSharp::SoundConfig
+  mixer: {fileID: 24100000, guid: 1835c0ff366e7b1ffaf466df7fea11dd, type: 2}
   playerDamage: {fileID: 8300000, guid: f22728addee225fbb969d7bdbab07ef1, type: 3}
   playerHeal: {fileID: 8300000, guid: a570964b3cdc7760e9cfbface90576d1, type: 3}
   goldClink: {fileID: 8300000, guid: 216633f04605f28c2a16f47b1a6fef02, type: 3}
