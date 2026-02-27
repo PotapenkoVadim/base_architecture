@@ -17,7 +17,7 @@ public class SoundService: IGameModule
     _audioSource.loop = false;
   }
 
-  public void Initilize()
+  public void Initialize()
   {
     _bus.SubScribe<GoldChangedEvent>(OnGoldChangedEvent);
     _bus.SubScribe<HealthChangedEvent>(OnHealthChangedEvent);

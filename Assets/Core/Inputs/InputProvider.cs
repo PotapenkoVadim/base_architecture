@@ -13,7 +13,7 @@ public class InputProvider: IGameModule
     _input = new();
   }
 
-  public void Initilize()
+  public void Initialize()
   {
     _input.Enable(); 
   }

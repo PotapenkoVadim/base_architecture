@@ -8,7 +8,7 @@ public class HealthController: IGameModule
     _model = model;
   }
 
-  public void Initilize()
+  public void Initialize()
   {
     _bus.SubScribe<AddHealthPointEvent>(HandleAddHealth);
     _bus.SubScribe<SubtractHealthPointEvent>(HandleSubstractHealth);

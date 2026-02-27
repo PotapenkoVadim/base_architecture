@@ -8,7 +8,7 @@ public class EconomyController: IGameModule
     _model = model;
   }
 
-  public void Initilize()
+  public void Initialize()
   {
     _bus.SubScribe<AddGoldPointEvent>(HandleAddGold);
     _bus.SubScribe<SubtractGoldPointEvent>(HandleSubtractGold);

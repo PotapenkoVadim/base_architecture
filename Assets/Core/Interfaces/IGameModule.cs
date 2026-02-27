@@ -1,4 +1,4 @@
 public interface IGameModule
 {
-  void Initilize() { }
+  void Initialize() { }
 }

@@ -17,7 +17,7 @@ public class PersistenceManager: IGameModule
     _health = health;
   }
 
-  public void Initilize() => LoadAll();
+  public void Initialize() => LoadAll();
 
   public void SaveAll()
   {

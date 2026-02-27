@@ -53,7 +53,7 @@ public class GameBootstrapper
     foreach (var system in _activeSystems)
     {
       if (system is IGameModule gameModule)
-        gameModule.Initilize();
+        gameModule.Initialize();
     }
   }
 
