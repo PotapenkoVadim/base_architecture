@@ -5,6 +5,7 @@ public class GlobalConfig: ScriptableObject
 {
   [Header("Infrastructure")]
   public GameObject sceneLoaderPrefab;
+  public GameObject settingsUIPrefab;
   public SceneData StartupScene;
 
   [Header("Audio Settings")]

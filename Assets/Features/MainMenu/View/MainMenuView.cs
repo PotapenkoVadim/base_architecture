@@ -6,6 +6,13 @@ public class MainMenuView: MonoBehaviour
 
   public void OnStartClick() => Services.Get<SceneService>().LoadScene(_gameplayScene);
 
-  public void OnOptionsClick() => Debug.Log("Settings will be here");
-  public void OnExitClick() => Application.Quit();
+  public void OnOptionsClick() => Services.Get<EventBus>().Raise(new ToggleSettingsViewEvent());
+  public void OnExitClick()
+  {
+    Application.Quit();
+
+    #if UNITY_EDITOR
+      UnityEditor.EditorApplication.isPlaying = false;
+    #endif
+  }
 }

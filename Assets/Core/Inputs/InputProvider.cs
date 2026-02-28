@@ -16,6 +16,7 @@ public class InputProvider: IGameModule
   public void Initialize()
   {
     _input.Enable(); 
+    _input.Player.Escape.performed += OnToggleSettingsView;
   }
 
   public Vector2 GetMovementVector()
@@ -32,5 +33,10 @@ public class InputProvider: IGameModule
   public bool IsUsingGamepad()
   {
     return _input.devices?.Any(d => d is Gamepad) ?? false;
+  }
+
+  public void OnToggleSettingsView(InputAction.CallbackContext ctx)
+  {
+    _bus.Raise(new ToggleSettingsViewEvent());
   }
 }

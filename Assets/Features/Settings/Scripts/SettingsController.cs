@@ -24,6 +24,5 @@ public class SettingsController: IGameModule
   private void ApplySettings()
   {
     Services.Get<SoundService>().SetVolume(_model.MasterVolume);
-    Services.Get<PersistenceManager>().SaveAll();
   }
 }

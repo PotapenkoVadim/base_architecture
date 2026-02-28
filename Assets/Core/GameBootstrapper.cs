@@ -48,6 +48,12 @@ public class GameBootstrapper
       var overlay = Object.Instantiate(config.sceneLoaderPrefab);
       Object.DontDestroyOnLoad(overlay);
     }
+
+    if (config.settingsUIPrefab != null)
+    {
+      var settings = Object.Instantiate(config.settingsUIPrefab);
+      Object.DontDestroyOnLoad(settings);
+    }
   }
 
   private static void InitializeServices()
