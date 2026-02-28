@@ -21,7 +21,6 @@ public class GameBootstrapper
     #else
       var saveService = new JsonSaveService();
     #endif
-    Register(saveService);
 
     var audioConfig = config.audioConfig; 
     var audioSource = CreateGlobalAudioSource();

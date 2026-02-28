@@ -1,10 +1,11 @@
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class HealthInfoView: MonoBehaviour
+public class HealthInfoView : MonoBehaviour
 {
   private const string START_TEXT = "HEALTH: ";
 
@@ -18,29 +19,30 @@ public class HealthInfoView: MonoBehaviour
 
   private void Awake()
   {
-    var initialHP = Services.Get<HealthModel>().CurrentHealht;
-    _text.text = START_TEXT + initialHP;
-
+    var healthModel = Services.Get<HealthModel>();
+    _text.text = START_TEXT + healthModel.CurrentHealht;
     _originalColor = _background.color;
   }
 
-  private void OnEnable() {
+  private void OnEnable()
+  {
     Services.Get<EventBus>().SubScribe<HealthChangedEvent>(UpdateUI);
   }
 
-  private void OnDisable() {
-    _cts?.Cancel();
+  private void OnDisable()
+  {
+    StopCurrentFlash();
     Services.Get<EventBus>().Unsubscribe<HealthChangedEvent>(UpdateUI);
   }
 
   private void UpdateUI(HealthChangedEvent e)
   {
+    _text.text = START_TEXT + Services.Get<HealthModel>().CurrentHealht;
+
     Color targetColor = e.Type == HealthChangeType.Heal ? _healColor : _damageColor;
 
-    _cts?.Cancel();
+    StopCurrentFlash();
     _cts = new CancellationTokenSource();
-
-    _text.text = START_TEXT + Services.Get<HealthModel>().CurrentHealht;
 
     FlashBackgroundAsync(targetColor, _cts.Token);
   }
@@ -50,24 +52,43 @@ public class HealthInfoView: MonoBehaviour
     try
     {
       _background.color = targetColor;
-      await Task.Delay(200, token);
+
+      float pauseEndTime = Time.unscaledTime + 0.2f;
+      while (Time.unscaledTime < pauseEndTime)
+      {
+        await Task.Yield();
+        token.ThrowIfCancellationRequested();
+      }
 
       float duration = 0.3f;
       float elapsed = 0;
 
       while (elapsed < duration)
       {
-        token.ThrowIfCancellationRequested();
-        elapsed += Time.deltaTime;
-        _background.color = Color.Lerp(targetColor, _originalColor, elapsed / duration);
-
         await Task.Yield();
+        token.ThrowIfCancellationRequested();
+
+        elapsed += Time.unscaledDeltaTime;
+        float t = Mathf.Clamp01(elapsed / duration);
+        
+        _background.color = Color.Lerp(targetColor, _originalColor, t);
       }
 
       _background.color = _originalColor;
-    } catch (System.OperationCanceledException)
+    }
+    catch (Exception)
     {
       _background.color = _originalColor;
+    }
+  }
+
+  private void StopCurrentFlash()
+  {
+    if (_cts != null)
+    {
+      _cts.Cancel();
+      _cts.Dispose();
+      _cts = null;
     }
   }
 }
